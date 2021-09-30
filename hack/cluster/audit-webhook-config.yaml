@@ -1,0 +1,14 @@
+clusters:
+  - name: audit-webhook-receiver
+    cluster:
+      server: http://10.75.30.224:8080
+users:
+  - name: webhook-auth
+    user:
+      token: insecure-token
+current-context: webhook
+contexts:
+  - context:
+      cluster: audit-webhook-receiver
+      user: webhook-auth
+    name: webhook

@@ -1,0 +1,22 @@
+apiVersion: kind.x-k8s.io/v1alpha4
+kind: Cluster
+name: audit-test
+nodes:
+- role: control-plane
+  image: kindest/node:v1.22.1
+  kubeadmConfigPatches:
+  - |
+    kind: ClusterConfiguration
+    apiServer:
+      extraArgs:
+        audit-webhook-mode: "batch"
+        audit-webhook-config-file: "/config/audit-webhook-config.yaml"
+        audit-policy-file: "/config/audit-policy.yaml"
+      extraVolumes:
+      - name: audit-config
+        hostPath: "/config"
+        mountPath: "/config"
+  extraMounts:
+  - hostPath: /Users/jakexks/git/github.com/jakexks/cert-manager-audit/hack/cluster
+    containerPath: "/config"
+    readOnly: true

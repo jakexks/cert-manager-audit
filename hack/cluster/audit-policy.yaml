@@ -1,0 +1,13 @@
+apiVersion: audit.k8s.io/v1beta1
+kind: Policy
+rules:
+  # Get all data from secrets and certificates in the namespace "audit-log-tests"
+  - level: RequestResponse
+    resources:
+      - group: "" # core
+        resources: ["secrets"]
+      - group: "cert-manager.io"
+        resources: ["certificates", "certificaterequests", "certificates/status", "certificaterequests/status"]
+    namespaces: ["audit-log-tests"]
+  # Default level for all other requests.
+  - level: None
